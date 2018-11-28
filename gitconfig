@@ -1,0 +1,25 @@
+[core]
+	excludesfile = ~/.gitignore
+	pager = less -+S
+	autocrlf = input
+[credential]
+	helper = osxkeychain
+[fetch]
+	prune = true
+[push]
+	default = simple
+[rebase]
+	autosquash = true
+[rerere]
+	enabled = true
+	autoupdate = true
+[pull]
+	ff = only
+[filter "lfs"]
+	clean = git lfs clean %f
+	smudge = git lfs smudge %f
+	required = true
+[help]
+	autocorrect = 1
+[diff]
+	indentHeuristic = on

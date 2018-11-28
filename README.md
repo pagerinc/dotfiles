@@ -11,6 +11,13 @@ To install, simply:
 ./install.rb && brew bundle
 ```
 
+## Misc
+
+```bash
+ln -s "$PWD/gitignore" ~/.gitignore
+ln -s "$PWD/agignore" ~/.agignore
+```
+
 This script will install [Homebrew][brew] and [Homebrew Bundle][bundle] in OS X.
 For a list of the tools being installed, take a look at the [Brewfile]
 

@@ -1,4 +1,5 @@
 tap 'homebrew/bundle'
+tap 'homebrew/cask'
 tap 'homebrew/completions'
 tap 'homebrew/core'
 tap 'homebrew/dupes'
@@ -8,6 +9,7 @@ brew 'coreutils'
 brew 'curl'
 cask 'docker'
 brew 'docker-completion'
+cask 'google-cloud-sdk'
 brew 'git'
 brew 'gnu-sed', args: ['with-default-names']
 brew 'gnu-tar'
