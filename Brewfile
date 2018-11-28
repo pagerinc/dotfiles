@@ -22,3 +22,4 @@ brew 'homebrew/dupes/grep', args: ['with-default-names']
 brew 'homebrew/dupes/less'
 brew 'homebrew/dupes/make'
 brew 'homebrew/dupes/openssh'
+cask 'aptible'
