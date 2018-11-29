@@ -1,7 +1,6 @@
 # dotfiles
 
-This repo is a collection of personal preferences and configuration settings 
-I've gathered and tweaked from around the web. Use them wisely and share.
+This repo contains a set of git, docker, and kubectl configuration files.
 
 ## Installation
 
