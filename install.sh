@@ -8,7 +8,7 @@ echo 'Installing Homebrew and bundle'
 
 echo 'Linking settings...'
 
-for f in 'gitconfig' 'gitignore' 'agignore'; do
+for f in 'gitconfig' 'gitignore' 'agignore' 'npmrc'; do
   ln -s "$PWD/${f}" "${HOME}/.${f}"
 done
 
