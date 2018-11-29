@@ -8,14 +8,7 @@ I've gathered and tweaked from around the web. Use them wisely and share.
 To install, simply:
 
 ```bash
-./install.rb && brew bundle
-```
-
-## Misc
-
-```bash
-ln -s "$PWD/gitignore" ~/.gitignore
-ln -s "$PWD/agignore" ~/.agignore
+./install.sh
 ```
 
 This script will install [Homebrew][brew] and [Homebrew Bundle][bundle] in OS X.
