@@ -1,8 +1,6 @@
 tap 'homebrew/bundle'
 tap 'homebrew/cask'
-tap 'homebrew/completions'
 tap 'homebrew/core'
-tap 'homebrew/dupes'
 tap 'homebrew/services'
 brew 'colordiff'
 brew 'coreutils'
