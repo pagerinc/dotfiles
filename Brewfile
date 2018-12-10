@@ -16,6 +16,7 @@ brew 'jq'
 brew 'kubernetes-cli'
 brew 'kubernetes-helm'
 brew 'the_silver_searcher'
+brew 'yamllint'
 brew 'z'
 brew 'homebrew/dupes/diffutils'
 brew 'homebrew/dupes/grep', args: ['with-default-names']
