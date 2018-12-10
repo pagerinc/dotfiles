@@ -15,4 +15,4 @@ For a list of the tools being installed, take a look at the [Brewfile]
 
 [bundle]: https://github.com/Homebrew/homebrew-bundle
 [brew]: http://brew.sh
-[Brewfile]: https://github.com/pagerinc/dotfiles/tree/master/blob/Brewfile
+[Brewfile]: https://github.com/pagerinc/dotfiles/blob/master/Brewfile
