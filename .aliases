@@ -1,0 +1,49 @@
+# USAGE NOTES
+# once loaded into bash, these functions and aliases will
+# give you access to a less verbose Apticle CLI
+# e.g. logging into aptible and ssh-ing into api-core on pager-qa
+#           a login
+#           pager-qa
+#           a ssh api-core
+
+# execute these first to set the active Aptible environment
+alias pager-qa='       export APTIBLE_ENV=pager-qa'
+# add more aliases here as shortcuts for other environments
+
+function a() {
+    if [[ $1 == "login" ]]; then
+        # to login to Aptible with a long-lasting token
+        #   usage no. 1:  a login
+        echo "EXECUTING aptible login --email=yourname@pager.com --lifetime=7d"
+        aptible login --email=yourname@pager.com --lifetime=7d
+    elif [[ $1 =~ ^(apps($|:create)|backup|db|endpoints) ]]; then
+        # for commands that do not support the --app option
+        #   usage no. 2:  a <aptible_subcommand> <target> [options..]
+        #   example    :  a db:tunnel mongo-qa
+        echo "EXECUTING aptible $1 $2 --environment $APTIBLE_ENV ${@:3}"
+        aptible $1 $2 --environment $APTIBLE_ENV ${@:3}
+    else
+        # for commands that support the --app option
+        #   usage no. 3:  a <aptible_subcommand> <app_name> [options..]
+        #   example 1  :  a config:set api-core ENV_VAR=VALUE
+        #   example 2  :  a "apps:scale cmd" api-core --container-count 3 
+        echo "EXECUTING aptible $1 --app $2 --environment $APTIBLE_ENV ${@:3}"
+        aptible $1 --app $2 --environment $APTIBLE_ENV ${@:3}
+    fi
+}
+
+# NOTE: use at your own risk, unconfirmed reports of Old Man Gaston
+#       haunting people who tunneled directly into production DBs
+# consistent port number helps simplify connection strings on DB clients
+alias mongo-hrz='    a db:tunnel mongodb-hrz    --port 27000'
+alias mongo-hrz-1='  a db:tunnel mongodb-hrz-1  --port 27001'
+alias mongo-hrz-2='  a db:tunnel mongodb-hrz-2  --port 27002'
+alias postgres-hrz=' a db:tunnel postgresql-hrz --port 5440'
+alias alfred-hrz='   a db:tunnel alfred-hrz     --port 5441'
+alias omnibus-hrz='  a db:tunnel omnibus-hrz    --port 5442'
+alias analytics-hrz='a db:tunnel analytics-hrz  --port 5443'
+
+function psql-aptible() {
+    # usage: psql-aptible [<port_number>]
+    psql -h 127.0.0.1 -p ${1:-5440} -d db -U aptible
+}
