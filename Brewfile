@@ -19,9 +19,9 @@ brew 'sops'
 brew 'the_silver_searcher'
 brew 'yamllint'
 brew 'z'
-brew 'homebrew/dupes/diffutils'
-brew 'homebrew/dupes/grep', args: ['with-default-names']
-brew 'homebrew/dupes/less'
-brew 'homebrew/dupes/make'
-brew 'homebrew/dupes/openssh'
+brew 'diffutils', args: ['with-default-names']
+brew 'grep', args: ['with-default-names']
+brew 'less', args: ['with-default-names']
+brew 'make', args: ['with-default-names']
+brew 'openssh'
 cask 'aptible'
