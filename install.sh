@@ -48,4 +48,39 @@ while true; do
     esac
 done
 
+while true; do
+    read -p "Do you wish to append aliases to your bash_profile? " yn
+    case $yn in
+        [Yy]* )
+          cat .aliases >> "${HOME}/.bash_profile"
+          break;;
+        [Nn]* ) break;;
+        * ) echo "Please answer [yY]* or [nN]*.";;
+    esac
+done
+
+while true; do
+    read -p "Do you wish to setup gcloud auth? " yn
+    case $yn in
+        [Yy]* )
+          gcloud auth login
+          gcloud auth configure-docker
+          break;;
+        [Nn]* ) break;;
+        * ) echo "Please answer [yY]* or [nN]*.";;
+    esac
+done
+
+while true; do
+    read -p "Do you wish to initialize your helm client? " yn
+    case $yn in
+        [Yy]* )
+          helm init
+          break;;
+        [Nn]* ) break;;
+        * ) echo "Please answer [yY]* or [nN]*.";;
+    esac
+done
+
+
 echo 'All done. Happy coding!'
