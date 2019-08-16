@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
 set -euo pipefail
 
 echo 'Installing Homebrew'
@@ -76,6 +78,21 @@ while true; do
     case $yn in
         [Yy]* )
           helm init
+          break;;
+        [Nn]* ) break;;
+        * ) echo "Please answer [yY]* or [nN]*.";;
+    esac
+done
+
+while true; do
+    read -p "Do you wish to initialize hub client? " yn
+    case $yn in
+        [Yy]* )
+          cd $DIR
+          echo Login with you github credentials:
+          hub issue
+          echo Hub is setup with this config \'~/.config/hub\'
+          cat ~/.config/hub
           break;;
         [Nn]* ) break;;
         * ) echo "Please answer [yY]* or [nN]*.";;
