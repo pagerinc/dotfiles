@@ -22,6 +22,7 @@ tmp
 GPATH
 GRTAGS
 GTAGS
+.idea
 
 # YARD artifacts
 .yardoc
