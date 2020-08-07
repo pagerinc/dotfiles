@@ -1,4 +1,4 @@
-# USAGE NOTES
+# APTIBLE SHORTCUTS
 # once loaded into bash, these functions and aliases will
 # give you access to a less verbose Apticle CLI
 # e.g. logging into aptible and ssh-ing into api-core on pager-qa
@@ -7,15 +7,16 @@
 #           a ssh api-core
 
 # execute these first to set the active Aptible environment
-alias pager-qa='       export APTIBLE_ENV=pager-qa'
+alias pgr-prod='export APTIBLE_ENV=pager-production'
+alias hrz-prod='export APTIBLE_ENV=horizon-production'
 # add more aliases here as shortcuts for other environments
 
 function a() {
     if [[ $1 == "login" ]]; then
         # to login to Aptible with a long-lasting token
         #   usage no. 1:  a login
-        echo "EXECUTING aptible login --email=yourname@pager.com --lifetime=7d"
-        aptible login --email=yourname@pager.com --lifetime=7d
+        echo "EXECUTING aptible login --email=your.name@pager.com --lifetime=7d"
+        aptible login --email=your.name@pager.com --lifetime=7d
     elif [[ $1 =~ ^(apps($|:create)|backup|db|endpoints) ]]; then
         # for commands that do not support the --app option
         #   usage no. 2:  a <aptible_subcommand> <target> [options..]
@@ -35,15 +36,74 @@ function a() {
 # NOTE: use at your own risk, unconfirmed reports of Old Man Gaston
 #       haunting people who tunneled directly into production DBs
 # consistent port number helps simplify connection strings on DB clients
-alias mongo-hrz='    a db:tunnel mongodb-hrz    --port 27000'
-alias mongo-hrz-1='  a db:tunnel mongodb-hrz-1  --port 27001'
-alias mongo-hrz-2='  a db:tunnel mongodb-hrz-2  --port 27002'
-alias postgres-hrz=' a db:tunnel postgresql-hrz --port 5440'
-alias alfred-hrz='   a db:tunnel alfred-hrz     --port 5441'
-alias omnibus-hrz='  a db:tunnel omnibus-hrz    --port 5442'
-alias analytics-hrz='a db:tunnel analytics-hrz  --port 5443'
+alias mongo-hrz='        a db:tunnel mongodb-hrz    --port 27000'
+alias mongo-hrz-1='      a db:tunnel mongodb-hrz-1  --port 27001'
+alias mongo-hrz-2='      a db:tunnel mongodb-hrz-2  --port 27002'
+alias pg-hrz='           a db:tunnel postgresql-hrz --port 5440'
 
-function psql-aptible() {
-    # usage: psql-aptible [<port_number>]
-    psql -h 127.0.0.1 -p ${1:-5440} -d db -U aptible
+alias mongo-prod='       a db:tunnel mongodb-prod        --port 27000'
+alias mongo-prod-1='     a db:tunnel mongodb-prod-1      --port 27001'
+alias mongo-prod-2='     a db:tunnel mongodb-prod-2      --port 27002'
+alias mongo-messages='   a db:tunnel mongodb-messages    --port 27003'
+alias mongo-messages-1=' a db:tunnel mongodb-messages-1  --port 27004'
+alias mongo-messages-2=' a db:tunnel mongodb-messages-2  --port 27005'
+
+alias pg-demographics='  a db:tunnel api-demographics-pg        --port 5440'
+alias pg-scheduling='    a db:tunnel api-scheduling-pg          --port 5441'
+alias pg-edge-api-admin='a db:tunnel postgres-edge-api-admin-pg --port 5442'
+
+##############################################################################
+
+# GIT SHORTCUTS
+# 
+# shortcuts for quick creation of PR against upstream
+# especially useful for GitOps
+#
+# implicit assumptions: you've set up your remotes as followed
+#   upstream -> pagerinc's main repository
+#   origin -> your personal fork repository
+#
+# example usage:
+# 1.  cd to your local repository
+# 2.  (optional) make a new branch with some descriptive name
+# 3a. `greset` to reset your current branch to upstream/master
+# 3b. alternatively, `grebase` to rebase your current branch (and any unmerged 
+#       local commits) on top of upstream/master
+# 4.  make new changes to the code
+# 5.  `commit -m "chore: some commit message here"` to make a new commit
+# 6.  `gpush` to push your new branch to your fork (origin)
+# 7.  `pr` to open a new browser window that creates the GitHub PR between 
+#       your newly created branch and upstream/master
+
+alias g=git
+
+function greset() {
+    git fetch ${1:-upstream} && git reset --hard ${1:-upstream}/master
+}
+
+function grebase() {
+    git pull ${1:-upstream} master --rebase
+}
+
+alias commit='git add . && git commit'
+
+function gpush() {
+    branch=`git branch 2> /dev/null | sed -e "/^[^*]/d" -e "s/* \(.*\)/\1/"`
+    git push -u ${1:-origin} ${branch} --force-with-lease
+}
+
+alias chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
+
+function pr() {
+    branch=`git branch 2> /dev/null | sed -e "/^[^*]/d" -e "s/* \(.*\)/\1/"`
+    chrome https://github.com/pagerinc/${PWD##*/}/compare/master...your_github_handle:${branch}?expand=1
+}
+
+##############################################################################
+
+# DOCKER SHORTCUTS
+alias k=kubectl
+
+function build() {
+    docker build . -t ${PWD##*/}
 }
